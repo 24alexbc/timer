@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer</title>
+    <style>
+        /* Estilo general */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc); /* Fondo degradado */
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Contenedor del temporizador */
+        #time {
+            font-size: 3rem; /* Tamaño del texto */
+            font-weight: bold;
+            padding: 20px;
+            border: 5px solid #fff; /* Borde blanco */
+            border-radius: 15px; /* Bordes redondeados */
+            background: rgba(255, 255, 255, 0.2); /* Fondo translúcido */
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3); /* Sombra */
+            text-align: center;
+        }
+    </style>
+</head>
+<body>  
+    <div id="time">Cargando...</div>
+    <script>
+        function startDailyTimer() {
+    function checkAndStartTimer() {
+        const now = new Date();
+        const start = new Date(now);
+        start.setHours(8, 45, 0);
+        const end = new Date(now);
+        end.setHours(14, 35, 0);
+
+        if (now >= start && now <= end) {
+            const cycleDuration = 50 * 60; // Duración de 50 minutos en segundos
+            const elapsedTime = Math.floor((now - start) / 1000);
+            const timeLeftInCurrentCycle = cycleDuration - (elapsedTime % cycleDuration);
+            startTimer(timeLeftInCurrentCycle);
+        } else {
+            document.querySelector('#time').textContent = "Fuera de horario escolar";
+        }
+    }
+
+    function startTimer(duration) {
+        let timer = duration;
+        const display = document.querySelector('#time');
+        
+        const countdown = setInterval(function () {
+            const minutes = Math.floor(timer / 60);
+            const seconds = timer % 60;
+
+            display.textContent = 
+                (minutes < 10 ? "0" + minutes : minutes) + ":" +
+                (seconds < 10 ? "0" + seconds : seconds);
+
+            if (--timer < 0) {
+                clearInterval(countdown);
+                checkAndStartTimer(); // Reinicia el temporizador al terminar el ciclo
+            }
+        }, 1000);
+    }
+
+    // Comprobar inmediatamente al cargar y reiniciar cada minuto
+    checkAndStartTimer();
+    setInterval(checkAndStartTimer, 60000); // Asegura que el temporizador se sincronice cada minuto
+}
+
+window.onload = startDailyTimer;
+
+    </script>
+</body>
+</html>
