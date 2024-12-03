@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Timer</title>
+    <script src="timer.js"></script>
     <style>
         /* Estilo general */
         body {
@@ -32,51 +33,6 @@
 </head>
 <body>  
     <div id="time">Cargando...</div>
-    <script>
-        function startDailyTimer() {
-    function checkAndStartTimer() {
-        const now = new Date();
-        const start = new Date(now);
-        start.setHours(8, 45, 0);
-        const end = new Date(now);
-        end.setHours(14, 35, 0);
-
-        if (now >= start && now <= end) {
-            const cycleDuration = 50 * 60; // Duración de 50 minutos en segundos
-            const elapsedTime = Math.floor((now - start) / 1000);
-            const timeLeftInCurrentCycle = cycleDuration - (elapsedTime % cycleDuration);
-            startTimer(timeLeftInCurrentCycle);
-        } else {
-            document.querySelector('#time').textContent = "Fuera de horario escolar";
-        }
-    }
-
-    function startTimer(duration) {
-        let timer = duration;
-        const display = document.querySelector('#time');
-        
-        const countdown = setInterval(function () {
-            const minutes = Math.floor(timer / 60);
-            const seconds = timer % 60;
-
-            display.textContent = 
-                (minutes < 10 ? "0" + minutes : minutes) + ":" +
-                (seconds < 10 ? "0" + seconds : seconds);
-
-            if (--timer < 0) {
-                clearInterval(countdown);
-                checkAndStartTimer(); // Reinicia el temporizador al terminar el ciclo
-            }
-        }, 1000);
-    }
-
-    // Comprobar inmediatamente al cargar y reiniciar cada minuto
-    checkAndStartTimer();
-    setInterval(checkAndStartTimer, 60000); // Asegura que el temporizador se sincronice cada minuto
-}
-
-window.onload = startDailyTimer;
-
-    </script>
+    
 </body>
 </html>
